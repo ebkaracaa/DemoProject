@@ -2,20 +2,22 @@ import store from '../store/store';
 import {UserTokenSuccessResponse} from './authResponses';
 import axios from './axios';
 const login = async (username: string, password: string) => {
-  const res = await axios.post<UserTokenSuccessResponse>('/user/token', {
-    username,
+  const res = await axios.post<UserTokenSuccessResponse>('/api/auth/signin', {
+    usernameOrEmail: username,
     password,
   });
-  return res.data;
+  console.log(res?.data);
+  return res?.data;
 };
 
 const getUsers = async () => {
-  const token = store.getState().user?.data?.token;
-  console.log(token);
-  const res = await axios.get('/admin/users', {
+  const token = store.getState().user?.data?.accessToken;
+  console.log(`Bearer ${token}`);
+
+  const res = await axios.get('/api/admin/users', {
     headers: {Authorization: `Bearer ${token}`},
   });
-  return res.data;
+  return res?.data;
 };
 async function addUser(
   username: string,
@@ -26,24 +28,21 @@ async function addUser(
   email: string,
   roleId: number,
 ) {
-  const token = store.getState().user?.data?.token;
-  console.log(token);
+  const token = store.getState().user?.data?.accessToken;
+  console.log(`Bearer ${token}`);
   const res = await axios.post(
-    '/admin/user',
+    '/api/admin/user',
     {
-      username: 'EMRE',
-      password,
       name,
-      surname,
-      phoneNumber,
+      roles: ['2'],
+      username,
       email: 'manager@delta.com',
-      roleId: 2,
     },
     {
       headers: {Authorization: `Bearer ${token}`},
     },
   );
-  return res.data;
+  return res?.data;
 }
 
 export default {login, getUsers, addUser};

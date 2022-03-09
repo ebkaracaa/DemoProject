@@ -1,0 +1,15 @@
+import React from 'react';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+// In PrincipleHome Principle can view the options.
+
+export const PrincipleHome = () => {
+  const [text, onChangeText] = React.useState('');
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>STUDENT HOME PAGE </Text>
+      <Text>ALL COURSES ARE HERE CLICK REGISTER TO ADD A COURSE: </Text>
+    </View>
+  );
+};
+
+export default PrincipleHome;

@@ -32,10 +32,10 @@ export const successLogin = (
   type: USER_SUCCESS,
   payload: data,
 });
-export const actvAcc = (
+/* export const actvAcc = (
   username: string,
   password: string,
 ): UserActvAccAction => ({
   type: USER_ACTIVATION,
   payload: {username, password},
-});
+}); */

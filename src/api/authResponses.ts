@@ -8,5 +8,5 @@ export interface UserTokenSuccessResponse {
   firstName: string;
   lastName: string;
   username: string;
-  token: string;
+  accessToken: string;
 }

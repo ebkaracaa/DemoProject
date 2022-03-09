@@ -32,7 +32,6 @@ function* fetchUser(action: UserRequestAction) {
     } else {
       yield put(failLogin({message: 'unknown error occured'}));
     }
-    console.log(e);
   }
 }
 
