@@ -15,21 +15,38 @@ import StudentProfile from './src/pages/UserPages/Student/StudentProfile';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const getStackByRole = role => {
+  switch (role) {
+    case 'ROLE_STUDENT':
+      return StudentStack;
+    case 'ROLE_INSTRUCTOR':
+      return InstructorStack;
+    case 'ROLE_SCHOOLMANAGER':
+      return SchoolManagerStack;
+    case 'ROLE_ADMIN':
+      return AdminStack;
+  }
+  return React.Fragment;
+};
+
 export function StackNavigator() {
   const isLogged = useSelector(state => state.user.isLogged);
+  const role = useSelector(state => state.user.data.authorities?.[0].authority);
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {isLogged ? ( // login successfull => directed to the related stack.
-          <Stack.Screen name="Home" component={StackRolePages()} />
+          <Stack.Screen name="Home" component={getStackByRole(role)} />
         ) : (
           // login fail => try again,AUTH PAGE
-          <>{AuthStack()}</>
+          <AuthStack />
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
 function AuthStack() {
   return <Stack.Screen name="Login" component={Login} />;
 }
@@ -91,20 +108,6 @@ function AdminStack() {
   );
 }
 
-const StackRolePages = () => {
-  let role = 'Student';
-  switch (role) {
-    case 'Student':
-      return StudentStack;
-    case 'Instructor':
-      return InstructorStack;
-    case 'SchoolManager':
-      return SchoolManagerStack;
-    case 'Admin':
-      return AdminStack;
-  }
-  return <></>;
-};
 export default function App() {
   return (
     <Provider store={store}>

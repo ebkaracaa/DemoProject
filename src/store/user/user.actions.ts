@@ -1,13 +1,21 @@
 import {
   UserTokenSuccessResponse,
   UserTokenFailResponse,
+  UserDetailsFailResponse,
+  UserDetailsSuccessResponse,
 } from '../../api/authResponses';
 import {
   UserActvAccAction,
+  UserDetailsFailAction,
+  UserDetailsRequestAction,
+  UserDetailsSuccessAction,
   UserFailAction,
   UserRequestAction,
   UserSuccessAction,
   USER_ACTIVATION,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_FAIL,
   USER_REQUEST,
   USER_SUCCESS,
@@ -32,6 +40,25 @@ export const successLogin = (
   type: USER_SUCCESS,
   payload: data,
 });
+
+export const userDetailsRequest = (): UserDetailsRequestAction => ({
+  type: USER_DETAILS_REQUEST,
+});
+
+export const userDetailsFail = (
+  error: UserDetailsFailResponse,
+): UserDetailsFailAction => ({
+  type: USER_DETAILS_FAIL,
+  error,
+});
+
+export const userDetailsSuccess = (
+  data: UserDetailsSuccessResponse,
+): UserDetailsSuccessAction => ({
+  type: USER_DETAILS_SUCCESS,
+  payload: data,
+});
+
 /* export const actvAcc = (
   username: string,
   password: string,

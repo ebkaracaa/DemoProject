@@ -10,8 +10,8 @@ export const Login = () => {
   /* export const ActivateAcc = () => {
   const dispatch = useDispatch(); */
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('gülsümkılıç');
+  const [password, setPassword] = useState('gülsüm123');
 
   const onLogin = () => {
     dispatch(login(email, password));

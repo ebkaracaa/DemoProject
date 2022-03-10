@@ -1,12 +1,23 @@
 export interface UserTokenFailResponse {
   message: string;
 }
+
 export interface UserTokenSuccessResponse {
-  roleId: number;
-  roleName: string;
-  id: number;
-  firstName: string;
-  lastName: string;
-  username: string;
+  tokenType: string;
   accessToken: string;
+}
+
+export type AuthorityObject = {
+  authority: string;
+};
+
+export interface UserDetailsSuccessResponse {
+  authorities: AuthorityObject[];
+  id: number;
+  name: string;
+  username: string;
+}
+
+export interface UserDetailsFailResponse {
+  message: string;
 }

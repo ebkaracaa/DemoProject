@@ -5,10 +5,10 @@ import api from '../../api/api';
 export const Home = () => {
   const [text, onChangeText] = React.useState('');
   const getUsers = () => {
-    api.getUsers().then(res => console.log(res));
+    api.getAllUserProfiles().then(res => console.log(res));
   };
   const addUser = async () => {
-    const response = await api.addUser(
+    const response = await api.getUserProfileWithUsername(
       'EMRE',
       'PASSSSSS',
       'ASD',
@@ -22,7 +22,7 @@ export const Home = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>BURASI ANA SAYFA </Text>
-      <TouchableOpacity onPress={() => getUsers()}>
+      <TouchableOpacity onPress={getUsers}>
         <Text>Get User</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => addUser()}>

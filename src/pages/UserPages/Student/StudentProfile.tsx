@@ -1,22 +1,74 @@
 import React from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import api from '../../../api/api';
 // IN STUDENTHOME STUDENT CAN SEE HIS/HER ALL CLASSES
 export const StudentProfile = () => {
-  const [text, onChangeText] = React.useState('');
-  const students = ['a', 'b', 'c', 'd'];
+  const [courses, setCourses] = React.useState([]);
+
+  React.useEffect(() => {
+    api
+      .getAllCoursesInStudentsSchool()
+      .then(data => {
+        console.log(data);
+        setCourses(data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  }, []);
+
+  const handleEnroll = id => () => {
+    console.log('handleEnroll', id);
+    api
+      .enrollToCourse(id)
+      .then(res => {
+        console.log('handleEnroll OK', res);
+      })
+      .catch(err => {
+        console.log('handleEnroll NOT', err.response.data);
+      });
+  };
+
+  const handleUnEnroll = id => () => {
+    console.log('handleUnEnroll', id);
+    api
+      .unenrollFromCourse(id)
+      .then(res => {
+        console.log('handleUnEnroll OK', res);
+      })
+      .catch(err => {
+        console.log('handleUnEnroll NOT', err.response.data);
+      });
+  };
+
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>STUDENT PROFILE PAGE </Text>
       <Text>REGISTERED COURSES ARE HERE, CLICK REGISTER TO ADD A COURSE: </Text>
-      {students.map(student => (
+      {courses.map(course => (
         <View
+          key={course.id}
           style={{
-            width: 80,
-            height: 40,
+            width: '100%',
+            height: 100,
             marginBottom: 10,
             backgroundColor: 'aqua',
           }}>
-          <Text>{student}</Text>
+          <Text>{JSON.stringify(course)}</Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'white',
+            }}
+            onPress={handleEnroll(course.id)}>
+            <Text>enroll</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'white',
+            }}
+            onPress={handleUnEnroll(course.id)}>
+            <Text>unenroll</Text>
+          </TouchableOpacity>
         </View>
       ))}
     </View>
